@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">App di chat</string>
+    <string name="create_an_account">Create Account</string>
+    <string name="welcome_to_app_di_chat">Welcome to app di chat</string>
+    <string name="name">Name</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_settings">Account Settings</string>
+    <string name="action_mute">Mute</string>
+    <string name="title">This is Main Activity</string>
+    <string name="register">Create Your Account</string>
+    <string name="logininto">Login Into Your Account</string>
+    <string name="confirmpassword">Confirm Password</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="display_name">Display Name</string>
+    <string name="display_status">Hey there! I am using App di Chat</string>
+    <string name="change_image">Change Image</string>
+    <string name="changestatus">Change Status</string>
+    <string name="changestats">Your Status</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="action_users">All Users</string>
+    <string name="friendsscount">Friends Count</string>
+    <string name="friendscount">Friends Count</string>
+    <string name="sendrequestbutton">Send Friend Request</string>
+    <string name="declinerequest">Decline Friend Request</string>
+</resources>

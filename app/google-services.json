@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "874266755577",
+    "firebase_url": "https://appdichat.firebaseio.com",
+    "project_id": "appdichat",
+    "storage_bucket": "appdichat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874266755577:android:169d0a8419aa6a99",
+        "android_client_info": {
+          "package_name": "mrc.appdichat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874266755577-5mhrgqvc0e37l7ngmpp04q2o290vr1ks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mrc.appdichat",
+            "certificate_hash": "a43810258b81a585c3b43e1165e9b62b1173687e"
+          }
+        },
+        {
+          "client_id": "874266755577-h2sh4b55165kejrkduug4ko0a3kc2nvg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhW4CURifxqTSrqCLPvqza1oFQ97mDbRQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874266755577-h2sh4b55165kejrkduug4ko0a3kc2nvg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

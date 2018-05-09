@@ -2,17 +2,22 @@ package mrc.appdichat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class FirstActivity extends AppCompatActivity {
 
     private Button mSignButton;
     private Button mLoginButton;
-    private Toolbar toolbar;
+    boolean doubleBackToExitPressedOnce = false;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -21,9 +26,8 @@ public class FirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
         mSignButton = (Button) findViewById(R.id.signup_button);
         mLoginButton = (Button) findViewById(R.id.login_button);
-        toolbar = (Toolbar) findViewById(R.id.first_app_bar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Welcome!");
+        mAuth=FirebaseAuth.getInstance();
+
 
 
         mSignButton.setOnClickListener(new View.OnClickListener() {
@@ -46,10 +50,24 @@ public class FirstActivity extends AppCompatActivity {
 
 
     }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.first_app_bar_menu, menu);
-        return true;
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press BACK again to EXIT", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
+
+
 }

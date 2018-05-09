@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +25,11 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity {
 
-    private ImageView imageView;
+    private CircleImageView imageView;
     private TextView nameInput;
     private TextView statusInput;
     private TextView friendsCountInput;
@@ -44,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     String mcurrent_state;
 
+
     long childCount = 0;
 
 
@@ -51,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        imageView = (ImageView) findViewById(R.id.profile_image_view);
+        imageView = (CircleImageView) findViewById(R.id.profile_image_view);
         nameInput = (TextView) findViewById(R.id.profile_name_view);
         statusInput = (TextView) findViewById(R.id.profile_status_view);
         friendsCountInput = (TextView) findViewById(R.id.profile_friendcount_view);
@@ -183,11 +185,16 @@ public class ProfileActivity extends AppCompatActivity {
                                 }
                             });
                 } else if (mcurrent_state.equalsIgnoreCase("sent")) {
-                    sendRequestButton.setEnabled(true);
-                    mcurrent_state = "not_friends";
-                    sendRequestButton.setText("SEND FRIEND REQUEST");
+
                     friendsDatabaseReference.child(firebaseUser.getUid()).child(user_id).removeValue();
-                    friendsDatabaseReference.child(user_id).child(firebaseUser.getUid()).removeValue();
+                    friendsDatabaseReference.child(user_id).child(firebaseUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            sendRequestButton.setEnabled(true);
+                            mcurrent_state = "not_friends";
+                            sendRequestButton.setText("SEND FRIEND REQUEST");
+                        }
+                    });
 
 
                 } else if (mcurrent_state.equals("received")) {
@@ -197,15 +204,26 @@ public class ProfileActivity extends AppCompatActivity {
                     currentFriendsReference.child(firebaseUser.getUid()).child(user_id).child("date").setValue(curr_date);
                     currentFriendsReference.child(user_id).child(firebaseUser.getUid()).child("date").setValue(curr_date);
                     friendsDatabaseReference.child(firebaseUser.getUid()).child(user_id).removeValue();
-                    friendsDatabaseReference.child(user_id).child(firebaseUser.getUid()).removeValue();
-                    sendRequestButton.setEnabled(true);
-                    sendRequestButton.setText("UNFRIEND");
+                    friendsDatabaseReference.child(user_id).child(firebaseUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            sendRequestButton.setEnabled(true);
+                            sendRequestButton.setText("UNFRIEND");
+                            declineRequestButton.setVisibility(View.GONE);
+                        }
+                    });
+
                 } else if (mcurrent_state.equals("friends")) {
                     mcurrent_state = "not_friends";
                     currentFriendsReference.child(firebaseUser.getUid()).child(user_id).removeValue();
-                    currentFriendsReference.child(user_id).child(firebaseUser.getUid()).removeValue();
-                    sendRequestButton.setEnabled(true);
-                    sendRequestButton.setText("SEND FRIEND REQUEST");
+                    currentFriendsReference.child(user_id).child(firebaseUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            sendRequestButton.setEnabled(true);
+                            sendRequestButton.setText("SEND FRIEND REQUEST");
+                        }
+                    });
+
                 } else ;
             }
         });
@@ -217,9 +235,14 @@ public class ProfileActivity extends AppCompatActivity {
 
                 mcurrent_state = "not_friends";
                 friendsDatabaseReference.child(firebaseUser.getUid()).child(user_id).removeValue();
-                friendsDatabaseReference.child(user_id).child(firebaseUser.getUid()).removeValue();
-                sendRequestButton.setText("SEND FRIEND REQUEST");
-                sendRequestButton.setVisibility(View.GONE);
+                friendsDatabaseReference.child(user_id).child(firebaseUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        sendRequestButton.setText("SEND FRIEND REQUEST");
+                        sendRequestButton.setVisibility(View.GONE);
+                    }
+                });
+
 
             }
         });
@@ -245,4 +268,19 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
+        usersDatabaseReference.child("online").setValue("true");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
+        usersDatabaseReference.child("online").setValue("false");
+    }
 }
+

@@ -1,12 +1,17 @@
 package mrc.appdichat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,8 +47,12 @@ public class SettingsActivity extends AppCompatActivity {
     private CircleImageView circleImageView;
 
     private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int CAMERA_REQUEST = 2;
 
     private StorageReference storageReference;
+    private DatabaseReference statsReference;
+
+    String stats = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
+        statsReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        statsReference.keepSynced(true);
 
 
         userId = firebaseAuth.getUid();
@@ -72,6 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 String displayName = dataSnapshot.child("name").getValue(String.class);
                 String status = dataSnapshot.child("status").getValue(String.class);
+                stats = status;
                 final String image = dataSnapshot.child("image").getValue(String.class);
                 nameInput.setText(displayName);
                 statusInput.setText(status);
@@ -118,23 +130,61 @@ public class SettingsActivity extends AppCompatActivity {
         statusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent statusIntent = new Intent(SettingsActivity.this, StatusActivity.class);
-                statusIntent.putExtra("status", statusInput.getText().toString());
-                startActivity(statusIntent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("EDIT STATUS");
+                builder.setIcon(R.drawable.edit_stats);
+
+
+                final EditText input = new EditText(SettingsActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                input.setText(stats);
+                input.setSelection(stats.length());
+                builder.setView(input);
+
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String new_stats = input.getText().toString();
+                        if (!TextUtils.isEmpty(new_stats))
+                            statsReference.child(userId).child("status").setValue(new_stats);
+                        else
+                            statsReference.child(userId).child("status").setValue("Hey there! I am using App di Chat");
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
+    }
+
+    public void onClick(View view) {
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        setResult(0, cameraIntent);
+        startActivityForResult(cameraIntent, RESULT_LOAD_IMAGE);
+
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        setResult(resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
             CropImage.activity(imageUri).setAspectRatio(1, 1)
                     .start(this);
         }
+            /*if(requestCode==CAMERA_REQUEST && resultCode==RESULT_OK)
+            {
+
+            }*/
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Uri croppedImageUri = CropImage.getActivityResult(data).getUri();
@@ -154,6 +204,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseReference.child("online").setValue("false");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        databaseReference.child("online").setValue("true");
     }
 }
 

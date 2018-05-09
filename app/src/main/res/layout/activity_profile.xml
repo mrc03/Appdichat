@@ -1,42 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context="mrc.appdichat.ProfileActivity">
-
-        <ImageView
-            android:id="@+id/profile_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/defaultprofile"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/profile_image_view"
-            android:background="@drawable/profile_back">
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:background="@color/colorPrimary">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image_view"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_centerInParent="true"
+                android:layout_margin="8dp"
+                android:src="@drawable/defaultprofile"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:background="#fff">
+
 
             <TextView
                 android:id="@+id/profile_name_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
                 android:hint="@string/display_name"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
-                android:textSize="25sp"
+                android:textColor="#000"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -45,12 +54,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_name_view"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
                 android:hint="@string/display_status"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
-                android:textSize="14sp"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
                 android:textStyle="italic"/>
 
             <TextView
@@ -59,43 +68,47 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_status_view"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="64dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
                 android:hint="@string/friendscount"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
-                android:textSize="18sp"
-                android:textStyle="normal"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/profile_friends_button"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_friendcount_view"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="4dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
                 android:background="#f00"
+                android:padding="4dp"
                 android:text="@string/sendrequestbutton"
                 android:textColor="#fff"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/profile_decline_friends_button"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_friends_button"
                 android:layout_centerHorizontal="true"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
                 android:background="#f00"
+
+                android:padding="4dp"
                 android:text="@string/declinerequest"
                 android:textColor="#fff"
+                android:textSize="14sp"
+
                 android:textStyle="bold"/>
 
 
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

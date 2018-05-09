@@ -14,10 +14,11 @@
         android:id="@+id/action_users"
         android:title="@string/action_users"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_mute"
-        android:title="@string/action_mute"
-        app:showAsAction="never"/>
+    <item android:id="@+id/action_search"
+          android:title="Search"
+          android:icon="@drawable/search"
+          app:showAsAction="ifRoom|collapseActionView"
+          app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
         android:id="@+id/action_logout"
         android:title="@string/action_logout"

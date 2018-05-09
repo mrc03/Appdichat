@@ -18,7 +18,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="display_name">Display Name</string>
     <string name="display_status">Hey there! I am using App di Chat</string>
-    <string name="change_image">Change Image</string>
+    <string name="change_image">Browse</string>
     <string name="changestatus">Change Status</string>
     <string name="changestats">Your Status</string>
     <string name="save_changes">Save Changes</string>
@@ -27,4 +27,5 @@
     <string name="friendscount">Friends Count</string>
     <string name="sendrequestbutton">Send Friend Request</string>
     <string name="declinerequest">Decline Friend Request</string>
+    <string name="new_member">Create An Account? Signup</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,7 +53,7 @@
 
             android:layout_marginTop="150dp"
 
-            android:background="#f00"
+            android:background="@drawable/layout_button"
             android:text="@string/change_image"
             android:textColor="#fff"
             android:textStyle="bold"/>
@@ -67,10 +68,23 @@
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="16dp"
-            android:background="#fff"
+            android:background="@drawable/input_fields"
             android:text="@string/changestatus"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/settings_name_input"
+            android:layout_alignEnd="@+id/settings_changeimagebutton"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="22dp"
+            android:background="@color/colorPrimary"
+            android:onClick="onClick"
+            app:srcCompat="@drawable/edit"/>
+
 
     </RelativeLayout>
 

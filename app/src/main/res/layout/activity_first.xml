@@ -21,38 +21,25 @@
             android:orientation="vertical"
             tools:context="mrc.appdichat.FirstActivity">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/first_app_bar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@color/colorPrimary"
-                android:elevation="4dp"
-                android:theme="@style/AppBarTheme1"></android.support.v7.widget.Toolbar>
 
             <ImageView
-                android:layout_width="300dp"
-                android:layout_height="250dp"
                 android:id="@+id/image_view"
-                android:layout_margin="8dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/download"/>
+                android:layout_margin="32dp"
+                android:src="@drawable/app_logo"/>
 
 
-            <TextView
-                android:id="@+id/first_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="6dp"
-                android:text="@string/welcome_to_app_di_chat"
-                android:textColor="#fff"
-                android:textSize="24sp"/>
 
             <Button
                 android:id="@+id/signup_button"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_margin="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="0dp"
                 android:background="#f00"
                 android:text="@string/create_an_account"
                 android:textColor="#fff"
@@ -65,7 +52,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="0dp"
                 android:background="#fff"
                 android:text="@string/login"
                 android:textColor="@color/colorPrimaryDark"

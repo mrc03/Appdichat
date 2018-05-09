@@ -35,9 +35,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 app:tabTextColor="#fff"
+                app:tabSelectedTextColor="#ffF"
                 app:tabIndicatorColor="#ff9"
                 android:theme="@style/AppBarTheme1"
-                app:tabIndicatorHeight="5dp"></android.support.design.widget.TabLayout>
+                app:tabIndicatorHeight="3dp"></android.support.design.widget.TabLayout>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager

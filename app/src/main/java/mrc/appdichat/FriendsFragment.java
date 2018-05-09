@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -41,6 +42,7 @@ public class FriendsFragment extends android.support.v4.app.Fragment {
     private View view;
 
     private String user_id;
+    private int color;
 
 
     private DatabaseReference databaseReference;
@@ -62,6 +64,7 @@ public class FriendsFragment extends android.support.v4.app.Fragment {
         usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         databaseReference.keepSynced(true);
         usersDatabaseReference.keepSynced(true);
+        color = getResources().getColor(R.color.colorPrimary);
 
 
         /*if(view==null)
@@ -100,9 +103,11 @@ public class FriendsFragment extends android.support.v4.app.Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final String name = dataSnapshot.child("name").getValue().toString();
                         final String image = dataSnapshot.child("image").getValue().toString();
+                        final String on = dataSnapshot.child("online").getValue().toString();
                         viewHolder.setName(name);
                         viewHolder.setImage(getContext(), image);
-                        viewHolder.setDate(model.getDate());
+                        viewHolder.setDate(model.getDate(), position, color);
+                        viewHolder.setOnline(on);
 
                         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -124,7 +129,7 @@ public class FriendsFragment extends android.support.v4.app.Fragment {
                                                 break;
                                             case 1:
                                                 Intent chatIntent = new Intent(getContext(), ChatActivity.class);
-                                                chatIntent.putExtra("key",user_id);
+                                                chatIntent.putExtra("key", user_id);
                                                 chatIntent.putExtra("name", name);
                                                 chatIntent.putExtra("image", image);
                                                 startActivity(chatIntent);
@@ -172,9 +177,13 @@ public class FriendsFragment extends android.support.v4.app.Fragment {
             mView = itemView;
         }
 
-        public void setDate(String date) {
+        public void setDate(String date, int positon, int color) {
             TextView textView = mView.findViewById(R.id.single_status);
             textView.setText("Friend Since " + date);
+
+            if (positon % 2 == 0) {
+                textView.setTextColor(color);
+            }
         }
 
         public void setName(String name) {
@@ -198,6 +207,13 @@ public class FriendsFragment extends android.support.v4.app.Fragment {
 
                 }
             });
+        }
+
+        public void setOnline(String on) {
+            if (on.equals("true")) {
+                ImageView imageView = mView.findViewById(R.id.single_online_view);
+                imageView.setVisibility(View.VISIBLE);
+            }
         }
 
 

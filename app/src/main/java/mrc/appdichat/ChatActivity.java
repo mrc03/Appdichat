@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
     private EditText messageInput;
 
     private DatabaseReference chatDatabasereference;
+    private DatabaseReference usersDatabaseReference;
     private DatabaseReference rootReference;
 
     private RecyclerView mMessagesList;
@@ -93,6 +94,7 @@ public class ChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         chatDatabasereference = FirebaseDatabase.getInstance().getReference().child("Chat");
         chatDatabasereference.keepSynced(true);
+        usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
 
         sendImageButton = findViewById(R.id.chat_plus_button);
         sendTextButton = findViewById(R.id.chat_send_button);
@@ -136,15 +138,24 @@ public class ChatActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(storeText)) {
                     messageInput.setText("");
                     storeMessage();
+                    updateChat();
                 }
 
-
-                //updateChat();
 
             }
         });
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        usersDatabaseReference.child("online").setValue("true");
+    }
+
+    public void updateChat() {
         chatDatabasereference.child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -162,8 +173,8 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -198,7 +209,6 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
-
 
 
     public void loadMessages() {
@@ -243,6 +253,12 @@ public class ChatActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         storeText = messageInput.getText().toString();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        usersDatabaseReference.child("online").setValue("false");
     }
 
     @Override

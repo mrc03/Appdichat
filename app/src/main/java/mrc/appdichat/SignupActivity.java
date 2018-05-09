@@ -68,11 +68,7 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.signup_app_bar_menu, menu);
-        return true;
-    }
+
 
     public void signup_user() {
         final String name = nameInput.getEditText().getText().toString();
@@ -80,7 +76,7 @@ public class SignupActivity extends AppCompatActivity {
         String password = passInput.getEditText().getText().toString();
         String cpassword = cpassInput.getEditText().getText().toString();
 
-        if (!name.isEmpty() && !mail.isEmpty() && !password.isEmpty()) {
+        if (!name.isEmpty() && !mail.isEmpty() && !password.isEmpty() && !cpassword.isEmpty()) {
 
             if (!isValidMail(mail)) {
                 Toast.makeText(SignupActivity.this, "Please Enter A Valid E-Mail Address", Toast.LENGTH_SHORT).show();
@@ -126,6 +122,7 @@ public class SignupActivity extends AppCompatActivity {
         hashMap.put("image", "default");
         hashMap.put("name", name);
         hashMap.put("status", "Hey there! I am using App di Chat");
+        hashMap.put("online","true");
         mDatabase.setValue(hashMap);
     }
 

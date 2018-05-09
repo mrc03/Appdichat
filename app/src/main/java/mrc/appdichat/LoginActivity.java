@@ -22,9 +22,9 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout mailInput;
     private TextInputLayout passInput;
     private Button loginButton;
-    private Toolbar toolbar;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +34,13 @@ public class LoginActivity extends AppCompatActivity {
         mailInput = (TextInputLayout) findViewById(R.id.login_email_field);
         passInput = (TextInputLayout) findViewById(R.id.login_pass_field);
         loginButton = (Button) findViewById(R.id.login_button);
+        toolbar = findViewById(R.id.login_app_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Login");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
         mAuth = FirebaseAuth.getInstance();
-
-        toolbar = (Toolbar) findViewById(R.id.login_app_bar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Login");
-
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.login_app_bar_menu, menu);
-        return true;
-    }
+
 
     public void login_user() {
         String email = mailInput.getEditText().getText().toString();
@@ -93,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
 
-            Toast.makeText(LoginActivity.this, "Please Enter Your Credentials", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Please Enter E-mail & Password", Toast.LENGTH_SHORT).show();
         }
 
     }

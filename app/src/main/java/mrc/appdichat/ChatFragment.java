@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -77,8 +78,10 @@ public class ChatFragment extends android.support.v4.app.Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final String name = dataSnapshot.child("name").getValue().toString();
                         final String image = dataSnapshot.child("image").getValue().toString();
+                        final String on = dataSnapshot.child("online").getValue().toString();
                         viewHolder.setName(name);
                         viewHolder.setImage(getContext(), image);
+                        viewHolder.setOnline(on);
                         viewHolder.view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -132,6 +135,14 @@ public class ChatFragment extends android.support.v4.app.Fragment {
 
                 }
             });
+        }
+
+        public void setOnline(String on) {
+            if (on.equals("true")) {
+                ImageView imageView = view.findViewById(R.id.single_online_view);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
         }
 
     }
